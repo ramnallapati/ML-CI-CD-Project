@@ -1,0 +1,41 @@
+
+
+# workflow name
+name : CI Pipeline
+
+
+# Runs everytime when we do a pull or push the repositories
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+# A workflow can contain multiple jobs.
+jobs:
+  test:
+    # running workflow machine
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download all the Github repository code into ubuntu virtual machine.
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # download the python with version
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+        python-version: "3.10"
+
+      # Install all dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Run the test
+      - name: Run tests
+        run: pytest
+
+
+
+# Jobs can be divided into three types : 1. test,  2. build  3. deploy
